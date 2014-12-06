@@ -1,0 +1,36 @@
+--- mt-metis-0.3.0/bowstring/src/io/bscomp_funcs.h.orig	2014-12-06 16:59:11.193140821 +0100
++++ mt-metis-0.3.0/bowstring/src/io/bscomp_funcs.h	2014-12-06 16:59:15.983140620 +0100
+@@ -377,6 +377,7 @@
+   int level;
+   #endif
+   uint64_t b64,i;
++  size_t sz;
+   BSCOMP_BIG_T * x = NULL;
+   BSCOMP_SMALL_T * y = NULL; 
+   const BSCOMP_BIG_T * big_buffer;
+@@ -423,10 +424,11 @@
+         dl_mark_file(file);
+         fseek(file->fd,sizeof(uint64_t),SEEK_CUR);
+         if ((rv = BSCOMP_PRI(gzip_compress)((const unsigned char *)big_buffer,
+-            sizeof(BSCOMP_BIG_T)*len,file,&b64,level)) != BOWSTRING_SUCCESS) {
++            sizeof(BSCOMP_BIG_T)*len,file,&sz,level)) != BOWSTRING_SUCCESS) {
+           eprintf("Compression failed.\n");
+           goto END;
+         }
++	b64 = sz;
+         /* go back and write compressed size */
+         dl_restore_file(file);
+         fwrite(&b64,sizeof(uint64_t),1,file->fd);
+@@ -472,10 +474,11 @@
+         fseek(file->fd,sizeof(uint64_t),SEEK_CUR);
+         if ((rv = BSCOMP_PRI(gzip_compress)(
+               (const unsigned char *)small_buffer,sizeof(BSCOMP_SMALL_T)*len,
+-            file,&b64,level)) != BOWSTRING_SUCCESS) {
++            file,&sz,level)) != BOWSTRING_SUCCESS) {
+           eprintf("Compression failed.\n");
+           goto END;
+         }
++	b64 = sz;
+         /* go back and write compressed size */
+         dl_restore_file(file);
+         fwrite(&b64,sizeof(uint64_t),1,file->fd);

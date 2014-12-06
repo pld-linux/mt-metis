@@ -1,0 +1,17 @@
+--- mt-metis-0.3.0/CMakeLists.txt.orig	2014-09-30 22:15:28.000000000 +0200
++++ mt-metis-0.3.0/CMakeLists.txt	2014-12-06 13:51:52.603612460 +0100
+@@ -13,10 +13,14 @@
+     add_definitions(-DUSE_ASSERTS=${ASSERT})
+     message("Assertions enabled")
+   endif()
++  if(NOT DEFINED CMAKE_BUILD_TYPE)
+   set(CMAKE_BUILD_TYPE Debug)
+   message("Building a debug release")
++  endif()
+ else()
++  if(NOT DEFINED CMAKE_BUILD_TYPE)
+   set(CMAKE_BUILD_TYPE Release)
++  endif()
+   add_definitions(-DNDEBUG=1)
+   add_definitions(-DNDEBUG2=1)
+   message("Building an optimized release")
