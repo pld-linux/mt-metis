@@ -15,3 +15,18 @@
    add_definitions(-DNDEBUG=1)
    add_definitions(-DNDEBUG2=1)
    message("Building an optimized release")
+--- mt-metis-0.3.0/src/CMakeLists.txt.orig	2014-09-29 17:14:56.000000000 +0200
++++ mt-metis-0.3.0/src/CMakeLists.txt	2014-12-06 18:59:46.324623781 +0100
+@@ -27,9 +27,9 @@
+   ${domlib_sources}
+ ) 
+ install(TARGETS mtmetis 
+-  LIBRARY DESTINATION lib
+-  RUNTIME DESTINATION lib
+-  ARCHIVE DESTINATION lib
++  LIBRARY DESTINATION lib${LIB_SUFFIX}
++  RUNTIME DESTINATION lib${LIB_SUFFIX}
++  ARCHIVE DESTINATION lib${LIB_SUFFIX}
+ )
+ 
+ 
